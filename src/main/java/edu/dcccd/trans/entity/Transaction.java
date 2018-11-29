@@ -1,16 +1,20 @@
 package edu.dcccd.trans.entity;
 
 import lombok.Data;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
+@Entity
+@Table(name = "TRANSACTION")
 @Data
-public class Transaction
-{
+public class Transaction {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String time;
     @NotNull
@@ -20,10 +24,13 @@ public class Transaction
     @NotEmpty
     private String description;
     @NotNull
+    @Column( precision=7, scale=2)
     private BigDecimal amount;
     @NotNull
     private String type;
+
     public Transaction(){ this.time = currentTime(); }
+
     public Transaction(Long id, String type,String day, BigDecimal amount, String description)
     {
         this.time = currentTime();
@@ -33,6 +40,7 @@ public class Transaction
         this.amount = amount;
         this.type = type;
     }
+
     private static String currentTime()
     {
         LocalDateTime now = LocalDateTime.now();
