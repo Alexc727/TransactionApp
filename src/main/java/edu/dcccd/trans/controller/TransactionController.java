@@ -27,7 +27,7 @@ public class TransactionController {
     @Autowired
     TransactionServiceImpl transactionService;
 
-    @GetMapping("/")
+    @GetMapping(value = {"/", "/home"})
     public String homePage(Model model){
         model.addAttribute("appName",appName);
         return "home";
